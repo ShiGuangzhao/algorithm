@@ -1,0 +1,76 @@
+\input{/home/shigz/local/courease/Microwave_Measure/headfile}
+\usepackage[framed,numbered,autolinebreaks,useliterate]{/home/shigz/local/courease//qianrushi/mcode}
+\lstset{basicstyle=\footnotesize\ttfamily,breaklines=true, language=C, xleftmargin=1em, xrightmargin=1em,  aboveskip=1em}
+
+\begin{document}
+\begin{center}
+    {\heiti\zihao{-2}\textbf{《算法导论》笔记}}\\  
+\end{center}
+\begin{spacing}{1.2}
+\songti\zihao{-4}
+\section{C语言知识}
+\subsection{关于变长数组}
+使用变量定义数字元素个数，即
+
+\qquad int str[number];
+
+\subsubsection{用法}
+\begin{enumerate} [(1)]
+    \item 可在程序块中使用(即不能为全局变量)
+    \item 不可作为结构体成员或联合体成
+    \item 不能用static或extern修饰
+    \item 一定要用的话可以在堆上定义（malloc/free）
+\end{enumerate}
+
+\subsection{统计程序运行时间}
+\subsubsection{使用clock函数}
+\begin{lstlisting}
+#include <time.h>
+double start, end; // clock_t?
+start = clock();
+...
+end = clock();
+double time = end - start;
+\end{lstlisting}
+
+\subsection{使用linux命令}
+命令如下：
+
+\qquad \$ time ./result
+
+\begin{lstlisting}
+    real	0m8.170s    // 实际运行时间
+    user	0m0.001s    // 用户空间运行时间
+    sys	    0m0.001s    // 内核空间运行时间
+\end{lstlisting}
+
+\subsection{C语言产生随机数}
+\begin{lstlisting}
+#include <stdlib.h>
+#include <time.h>
+// 以时间为种子，如不调用此函数则每次运行结果相同
+// 此函数只调用一次即可 
+srand(time(NULL));
+// 产生 0-100 的随机数
+int number = rand()%101;
+\end{lstlisting}
+
+\subsection{C语言计算对数}
+math.h 中包含log（以e为底）和log10两个函数，计算其他的可以应用公式
+\[
+    \log _ab = \frac{\log _cb}{\log _ca}
+\]
+如
+\[
+    \log _24 = \frac{\log 4}{\log 2}
+\]
+
+    \section{其他知识}
+    \subsection{Linux使用数学库}
+    使用math.h时编译如下
+
+    \qquad \$ gcc area.c -o area.out  -lm
+
+\end{spacing}
+\end{document}
+
