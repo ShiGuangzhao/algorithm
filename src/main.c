@@ -11,6 +11,7 @@ int main(void)
 {
     rand_init();
     /* test_sort(); */
+    printf("那就即将步入感觉如果给\n");
     test_find_k();
     return 0;
 }
