@@ -36,6 +36,7 @@ BSTree Insert(int X, BSTree T) {
     }
     else if(T->value == X) {
         printf("错误：不允许插入相同值");
+        exit(-1);
     }
     else if(T->value > X) {
         T->left = Insert(X, T->left);
@@ -87,15 +88,24 @@ ptrToPosition FindMin(BSTree T) {
  * 返回最小元素
  * ******/
 static BSTree DeleteMin(BSTree T) {
+    ptrToNode oldT = T;
     if(T == NULL) {
         printf("错误，在空树中删除最小值");
         exit(-1);
     }
     while(T->left) {
+        oldT = T;
         T = T->left;
     }
     ptrToNode tempNode = T;
-    free(T);
+    if(T->right) {
+        T->value = T->right->value;
+        free(T->right);
+    }
+    else {
+        free(T);
+        oldT->left = NULL;
+    }
     return tempNode;
 }
 
