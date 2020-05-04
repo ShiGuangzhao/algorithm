@@ -64,3 +64,27 @@ void Destory(pHashTable H) {
     free(H->head);
     free(H);
 }
+
+void Delete(const char *key, pHashTable H) {
+    int index = Hash(key, H->TableSize);
+    pList list = H->head[index];
+    if(list == NULL) {
+        printf("未找到需要删除的节点\n");
+        return;
+    }
+    if(0 == strcmp(key, list->value)) {
+        pListNode temp = list;
+        list = list->next;
+        free(temp);
+        return;
+    }
+    while(list->next != NULL) {
+        if(0 == strcmp(key, list->next->value)) {
+            pListNode temp = list->next;
+            list->next = list->next->next;
+            free(temp);
+            break;
+        }
+        list = list->next;
+    }
+}

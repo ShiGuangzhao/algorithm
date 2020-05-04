@@ -40,6 +40,10 @@ void Insert(const char *key, pHashTable H);
  * 清空表
  * ***/
 void Destory(pHashTable H);
+/* ****
+ * 删除节点
+ * ***/
+void Delete(const char *key, pHashTable H);
 extern int Hash(const char *key, int TableSize);
 
 #endif /* SEPARATE_CHAINING_H_C */

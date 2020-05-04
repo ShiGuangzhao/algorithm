@@ -21,6 +21,13 @@ int main() {
     else {
         printf("结果为%s\n", t->value);
     }
+    Delete("23", temp);
+    if((t = Find("23", temp)) == NULL) {
+        printf("NULL\n");
+    }
+    else {
+        printf("结果为%s\n", t->value);
+    }
     Destory(temp);
     return 0;
 }
