@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 #include "binary_heap.h"
 
@@ -106,6 +107,7 @@ int IsEmpty(pHeap H) {
     }
     
 }
+
 int IsFull(pHeap H) {
     if(H == NULL) {
         printf("错误，堆为NULL");
@@ -118,3 +120,33 @@ int IsFull(pHeap H) {
         return false;
     }
 }
+
+/* ********
+ * 下滤操作
+ * 2*i < H->size 有右儿子 等于则只有左儿子
+ * 
+ * *****/
+static void PercolateDown(pHeap H, int i) {
+    int child_index = 2*i;
+    if(2*i < H->size && \
+            H->value[child_index] > H->value[child_index + 1]) {
+        child_index++;
+    }
+    if(H->value[i] > H->value[child_index]) {
+        int temp = H->value[i];
+        H->value[i] = H->value[child_index];
+        H->value[child_index] = temp;
+    }
+}
+
+pHeap BuildHeap(int *data, int n) {
+    pHeap H = Initialize(n);
+    H->value = (int *)malloc(sizeof(int) * n);
+    memcpy(H->value, data, sizeof(int)*n);
+    H->size = n;
+    for(int i = n/2; i > 0; i++) {
+        PercolateDown(H, i);
+    }
+    return H;
+}
+

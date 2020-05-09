@@ -23,5 +23,6 @@ int DeletMin(pHeap H);
 int FindMin(pHeap H);
 int IsEmpty(pHeap H);
 int IsFull(pHeap H);
+pHeap BuildHeap(int *data, int n);
 
 #endif /* BINARY_HEAP_H_C */
