@@ -15,9 +15,11 @@ typedef struct TreeNode *pNode;
 pHeap Initialize(void);
 ValueType FindMin(pHeap H);
 int IsEmpty(pHeap H);
-pHeap Merge(pHeap H1, pHeap H2);
+pHeap Merge(pHeap H1, pHeap H2);    // 合并操作
+void Destory(pHeap H);
 
-#define Insert(X, H)    (H = Insert1((X), H))
+#define Insert(X, H)    (H = Insert1((X), H))   // 直接改变H
+#define DeleteMin(H)    FindMin(H); H = DeleteMinl(H)// 返回删除的最小值
 pHeap Insertl(ValueType X, pHeap H);
 pHeap DeleteMinl(pHeap H);
 

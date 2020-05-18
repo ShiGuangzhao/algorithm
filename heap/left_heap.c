@@ -6,6 +6,8 @@
  ************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include "left_heap.h"
 
 static int GetNpl(pNode N) {
@@ -28,6 +30,23 @@ pHeap Initialize(void) {
     return NULL;
 }
 
+static pHeap Mergel(pHeap H1, pHeap H2) {
+    // H1->value < H2->value
+    if(H1->left == NULL) {  // H1为单节点，H1->npl不变
+        H1->left = H2;
+    }
+    else {
+        H1->right = Merge(H2, H1->right);   // 递归合并
+        if(H1->left->npl < H1->right->npl) {// 左小于右则交换
+            pNode temp = H1->right;
+            H1->right = H1->left;
+            H1->left = temp;
+        }
+        H1->npl = H1->right->npl + 1;       // 更新npl值
+    }
+    return H1;
+}
+
 pHeap Merge(pHeap H1, pHeap H2) {
     if(H1 == NULL) {
         return H2;
@@ -36,22 +55,50 @@ pHeap Merge(pHeap H1, pHeap H2) {
         return H1;
     }
     if(H1->value > H2->value) {
-        pNode temp = Merge(H1, H2->right);
-        H2->right = H2->left;
-        H2->left = temp;
-        SetNpl(H2);
-        return H2;
+        return Mergel(H2, H1);
     }
     else {
-        pNode temp = Merge(H2, H1->right);
-        H1->right = H1->left;
-        H1->left = temp;
-        SetNpl(H1);
-        return H1;
+        return Mergel(H1, H2);
     }
 }
-ValueType FindMin(pHeap H);
-int IsEmpty(pHeap H);
-pHeap Insertl(ValueType X, pHeap H);
-pHeap DeleteMinl(pHeap H);
 
+ValueType FindMin(pHeap H) {
+    if(H == NULL) {
+        printf("错误：NULL堆无法找到最小元素\n");
+        exit(-1);
+    }
+    return H->value;
+}
+
+int IsEmpty(pHeap H) {
+    if(H == NULL) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+pHeap Insertl(ValueType X, pHeap H) {
+    pNode H2 = (pNode)malloc(sizeof(struct TreeNode));
+    H2->value = X;
+    H2->left = NULL;
+    H2->right = NULL;
+    H2->npl = 0;
+    H = Merge(H, H2);
+    return H;
+}
+
+pHeap DeleteMinl(pHeap H) {
+    pHeap newHeap = Merge(H->left, H->right);
+    free(H);
+    return newHeap;
+}
+
+void Destory(pHeap H) {
+    if(H != NULL) {
+        Destory(H->left);
+        Destory(H->right);
+        free(H);
+    }
+}
