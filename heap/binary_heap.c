@@ -124,18 +124,19 @@ int IsFull(pHeap H) {
 /* ********
  * 下滤操作
  * 2*i < H->size 有右儿子 等于则只有左儿子
- * 
  * *****/
 static void PercolateDown(pHeap H, int i) {
     int child_index = 2*i;
-    if(2*i < H->size && \
-            H->value[child_index] > H->value[child_index + 1]) {
-        child_index++;
-    }
-    if(H->value[i] > H->value[child_index]) {
-        int temp = H->value[i];
-        H->value[i] = H->value[child_index];
-        H->value[child_index] = temp;
+    for(int jjj = i; 2*jjj < H->size; jjj = child_index) {
+        if(2*i < H->size && \
+                H->value[child_index] > H->value[child_index + 1]) {
+            child_index++;
+        }
+        if(H->value[jjj] > H->value[child_index]) {
+            int temp = H->value[jjj];
+            H->value[jjj] = H->value[child_index];
+            H->value[child_index] = temp;
+        }
     }
 }
 
