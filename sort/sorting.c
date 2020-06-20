@@ -11,7 +11,7 @@
 #include <string.h>
 #include "sorting.h"
 
-static void SwapElem(ElemType *a, ElemType *b) {
+void SwapElem(ElemType *a, ElemType *b) {
     ElemType temp = *a;
     *a = *b;
     *b = temp;
@@ -199,3 +199,160 @@ void MergeSort(ElemType A[], int N) {
     Merge(A, N, TempArray);
     free(TempArray);
 }
+
+// 当快速排序元素个数小于CUT_OFF_NUM时使用插入排序
+#define CUT_OFF_NUM     6
+
+/* **********
+ * 快速排序枢纽元选择
+ * 使用三数中值分割法
+ * *******/
+ElemType QuickSort_Pivot(ElemType A[], int N) {
+    int iCenterIndex = N/2;
+    int iLastIndex = N - 1;
+    if(A[0] > A[iCenterIndex]) {
+        SwapElem(A, A + iCenterIndex);
+    }
+    if(A[iCenterIndex] > A[iLastIndex]) {
+        SwapElem(A + iCenterIndex, A + iLastIndex);
+    }
+    if(A[0] > A[iCenterIndex]) {
+        SwapElem(A, A + iCenterIndex);
+    }
+    SwapElem(A + iCenterIndex, A + iLastIndex - 1);
+    return A[iLastIndex - 1];
+}
+
+/* **********
+ * 快速排序
+ * *****/
+void QuickSort(ElemType A[], int N) {
+    if(N <= CUT_OFF_NUM) {
+        InsertionSort(A, N);
+        return;
+    }
+    ElemType iPivot = QuickSort_Pivot(A, N);
+    int i = 0, j = N - 2;
+    while(1) {
+        while(A[++i] < iPivot) {}
+        while(A[--j] > iPivot) {}
+        // 注意：以下写法时错的，在A[i]=A[j]=iPivot时会进入无限循环！！！
+        // while(A[i] < iPivot) {i++;}
+        // while(A[j] > iPivot) {j--;}
+        if(i < j) {
+            SwapElem(A + i, A + j);
+        }
+        else {
+            break;
+        }
+    }
+    SwapElem(A + i, A + N - 2);
+    QuickSort(A, i);
+    QuickSort(A + (i + 1), N - (i + 1));
+}
+
+/* **********
+ * 指定参数范围的计数排序
+ * *****/
+void CountSort_withRange(int A[], int N, int MinElem, int MaxElem) {
+    int iii = 0, jjj = 0;
+    int iCountNum = MaxElem - MinElem + 1;
+    // 计数
+    int *C = (int *)malloc(iCountNum * sizeof(int));
+    memset(C, '\0', sizeof(int) * iCountNum);
+    for(iii = 0; iii < N; iii++) {
+        C[A[iii] - MinElem]++;
+    }
+    // 反向填充
+    for(iii = 0; iii < iCountNum; iii++) {
+        while(C[iii]-- > 0) {
+            A[jjj++] = iii;
+        }
+    }
+    free(C);
+}
+
+
+/* ***********
+ * 计数排序：假设输入为一定范围内的整数
+ * ****/
+void CountSort(int A[], int N) {
+    // 寻找最大值和最小值
+    int MaxElem = A[0], MinElem = A[0];
+    for(int iii = 0; iii < N; iii++) {
+        if(A[iii] > MaxElem) {
+            MaxElem = A[iii];
+        }
+        if(A[iii] < MinElem) {
+            MinElem = A[iii];
+        }
+    }
+    CountSort_withRange(A, N, MinElem, MaxElem);
+}
+
+// 基数排序基数二进制位数（4即基数为16）
+#define RADIX_BASE_BINARY   4
+typedef struct RADIX_STRUCT {
+    int base;   // 基数值
+    int value;  // 原始值
+} tsRadixStruct;
+
+static void Print_RadixStruct(tsRadixStruct A[], int N) {
+    printf("\n");
+    for(int iii = 0; iii < N; iii++) {
+        printf("base = %d, value = %d = %X\n", A[iii].base, A[iii].value, A[iii].value);
+    }
+}
+
+/* **********
+ * 使用计数排序对基数结构体排序
+ * ******/
+void CountSort_Struct(tsRadixStruct A[], int N, int iCountNum) {
+    int iii = 0;
+    int *B = (int *)malloc(N * sizeof(int));
+    int *C = (int *)malloc((iCountNum) * sizeof(int));
+    memset(C, '\0', sizeof(int) * (iCountNum+ 1));
+    memset(B, '\0', sizeof(int) * N);
+    // 计数
+    for(iii = 0; iii < N; iii++) {
+        C[A[iii].base]++;
+    }
+    // 累加，累加后对应位置存储的数据即其存储的位置    
+    for(iii = 1; iii < iCountNum; iii++) {
+        C[iii] += C[iii - 1];
+    }
+    // 反向填充
+    for(iii = N - 1; iii >= 0; iii--) {
+        B[--C[A[iii].base]] = A[iii].value;
+    }
+    for(iii = 0; iii < N; iii++) {
+        A[iii].value = B[iii];
+    }
+    free(C);
+    free(B);
+}
+
+/* *********
+ * 基数排序：假设输入正整数
+ * *****/
+void RadixSort(int A[], int N) {
+    int iRadixBase = (1 << RADIX_BASE_BINARY) - 1;
+    int iii = 0, jjj = 0;
+    tsRadixStruct *A_Struct = (tsRadixStruct *)malloc(sizeof(tsRadixStruct) * N);
+    for(iii = 0; iii < N; iii++) {
+        A_Struct[iii].value = A[iii];
+    }
+    for(iii = 0; iii < 32/ RADIX_BASE_BINARY; iii++) {
+        // 计算base值
+        for(jjj = 0; jjj < N; jjj++) {
+            A_Struct[jjj].base = (A_Struct[jjj].value >> (iii*RADIX_BASE_BINARY)) & iRadixBase;
+        }
+        // 排序
+        CountSort_Struct(A_Struct, N, iRadixBase + 1);
+    }
+    for(iii = 0; iii < N; iii++) {
+        A[iii] = A_Struct[iii].value;
+    }
+    free(A_Struct);
+}
+
