@@ -7,7 +7,9 @@
 
 #ifndef _GRAPH_INIT_H_C
 #define _GRAPH_INIT_H_C
+
 #define MAX_NODE_NUM    20
+#define NODE_INIT_VALUE (-1)
 
 typedef int     Node;
 struct ListNode;
@@ -32,5 +34,6 @@ void AddEdge_Single(tGraph G, Node U, Node V);
 void AddEdge_Double(tGraph G, Node U, Node V);
 void DeleteEdge_Single(tGraph G, Node U, Node V);
 void DeleteEdge_Double(tGraph G, Node U, Node V);
+void FreeList(tiGraphList list);
 
 #endif /* GRAPH_INIT_H_C */

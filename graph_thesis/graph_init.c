@@ -16,17 +16,16 @@ tGraph GraphInit(void) {
     tGraph G = (tGraph)malloc(sizeof(tsListNode) * MAX_NODE_NUM);
     for(int iii = 0; iii < MAX_NODE_NUM; iii++) {
         G[iii].next = NULL;
-        G[iii].name = 0;
+        G[iii].name = NODE_INIT_VALUE;
     }
     return G;
 }
 
-static void FreeList(tiGraphList list) {
+void FreeList(tiGraphList list) {
     if(list->next != NULL) {
         FreeList(list->next);
     }
     free(list);
-
 }
 
 void GraphDestory(tGraph G) {
