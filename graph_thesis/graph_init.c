@@ -22,10 +22,12 @@ tGraph GraphInit(void) {
 }
 
 void FreeList(tiGraphList list) {
-    if(list->next != NULL) {
-        FreeList(list->next);
+    if(list != NULL) {
+        if(list->next != NULL) {
+            FreeList(list->next);
+        }
+        free(list);
     }
-    free(list);
 }
 
 void GraphDestory(tGraph G) {
@@ -46,6 +48,8 @@ void AddEdge_Single(tGraph G, Node U, Node V) {
         list = list->next;
     }
     list->next = (pListNode)malloc(sizeof(tsListNode));
+    list->next->name = V;
+    list->next->next = NULL;
 }
 
 void AddEdge_Double(tGraph G, Node U, Node V) {

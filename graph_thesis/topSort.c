@@ -21,6 +21,7 @@ void clacGraphInDegree(tGraph G, int iInDegree[]) {
         list = G[iii].next;
         while(list != NULL) {
             iInDegree[list->name]++;
+            list = list->next;
         }
     }
 }
@@ -75,6 +76,7 @@ void topSort(tGraph G) {
     int iNodeIn0 = -1;
     tiGraphList list = NULL;
     int iii = 0;
+    // 队列
     piQueue queue = iQueueInit(QueueSize_topSort);
     // 计算入度
     clacGraphInDegree(G, iInDegree);
@@ -83,6 +85,28 @@ void topSort(tGraph G) {
             iEnqueue(queue, iii);
         }
     }
-
+    for(iii = 0; iii <giGraphNodeNum; iii++) {
+        iNodeIn0 = iDequeue(queue);
+        G[iNodeIn0].name = iii;
+        list = G[iNodeIn0].next;
+        while(list != NULL) {
+            if((--iInDegree[list->name]) == 0) {
+                iEnqueue(queue, list->name);
+            }
+            list = list->next;
+        }
+    }
+    iQueueDestory(queue);
 }
 
+/* ***********
+ * 拓扑顺序存储在头节点中，打印拓扑顺序
+ * *******/
+void PrintTopSort(tGraph G) {
+    printf("开始打印拓扑顺序\n");
+    printf("---------------------------------------\n");
+    for(int iii = 0; iii < giGraphNodeNum; iii++) {
+        printf("Node: %d, Rank: %d\n", iii + 1, G[iii].name);
+    }
+    printf("---------------------------------------\n");
+}

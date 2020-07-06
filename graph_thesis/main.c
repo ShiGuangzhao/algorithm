@@ -10,12 +10,30 @@
 #include "graph.h"
 #include "../commom/common.h"
 
-int giGraphNodeNum = 10;
-int main(void) {
-    int a[2] = {0xf001,2 };
-    PrintArray_int(a, 2);
-    memset(a, 0, sizeof(int)*2);
-    PrintArray_int(a, 2);
-    return 0;
+int giGraphNodeNum = 7;
 
+tGraph ReadGraph(void) {
+    tGraph G = GraphInit();
+    AddEdge_Single(G, 0, 1);
+    AddEdge_Single(G, 0, 2);
+    AddEdge_Single(G, 0, 3);
+    AddEdge_Single(G, 1, 3);
+    AddEdge_Single(G, 1, 4);
+    AddEdge_Single(G, 4, 3);
+    AddEdge_Single(G, 4, 6);
+    AddEdge_Single(G, 3, 6);
+    AddEdge_Single(G, 3, 5);
+    AddEdge_Single(G, 3, 2);
+    AddEdge_Single(G, 2, 5);
+    AddEdge_Single(G, 6, 5);
+    return G;
+}
+
+int main(void) {
+    tGraph G = ReadGraph();
+    PrintTopSort(G);
+    topSort(G);
+    PrintTopSort(G);
+    GraphDestory(G);
+    return 0;
 }

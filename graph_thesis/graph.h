@@ -13,5 +13,6 @@ extern int giGraphNodeNum;
 
 void topSort_simplify(tGraph G);
 void topSort(tGraph G);
+void PrintTopSort(tGraph G);
 
 #endif /* GRAPH_H_C */
