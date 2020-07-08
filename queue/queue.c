@@ -54,3 +54,20 @@ Queue_ElemType iDequeue(piQueue Q) {
     Q->iHead %= Q->size;
     return value;    
 }
+
+int iQueueIsEmpty(piQueue Q) {
+    if(Q->iNext == Q->iHead) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+int iQueueIsFull(piQueue Q) {
+    if(QueueLeftSize(Q) == 1) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}

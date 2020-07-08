@@ -20,4 +20,6 @@ piQueue iQueueInit(int size);
 void iQueueDestory(piQueue Q);
 void iEnqueue(piQueue Q, Queue_ElemType value);
 Queue_ElemType iDequeue(piQueue Q);
+int iQueueIsEmpty(piQueue Q);
+int iQueueIsFull(piQueue Q);
 #endif /* QUEUE_H_C */

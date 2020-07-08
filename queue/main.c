@@ -14,7 +14,9 @@ int main(void) {
     printf("%d\n", iDequeue(Q));
     iEnqueue(Q, 1115);
     printf("%d\n", iDequeue(Q));
+    printf("队列空？：%d\n", iQueueIsEmpty(Q));
     printf("%d\n", iDequeue(Q));
+    printf("队列空？：%d\n", iQueueIsEmpty(Q));
     printf("%d\n", iDequeue(Q));
     return(0);
 }
