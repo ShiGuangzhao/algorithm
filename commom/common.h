@@ -17,6 +17,9 @@
     printf("ERROR--FILE: %s, LINE: %d, %s\n", __FILE__, __LINE__, __str__);   \
     exit(-1);
 
+#define PRINT_WARRING(__str__) \
+    printf("WARRING--FILE: %s, LINE: %d, %s\n", __FILE__, __LINE__, __str__);
+
 void PrintArray_int(int A[], int N, int line = 20);
 
 #endif /* COMMON_H_C */

@@ -10,11 +10,14 @@
 
 #define MAX_NODE_NUM    20
 #define NODE_INIT_VALUE (-1)
+#define NODE_INIT_WEIGHT    1
 
 typedef int     Node;
+typedef int     WeightType;
 struct ListNode;
 typedef struct ListNode {
     Node name;
+    WeightType weight; 
     struct ListNode *next;
 } tsListNode;
 // 邻接表表示方法链表指针
@@ -30,8 +33,8 @@ typedef tiListGraph tGraph;
 // 以下方法基于邻接表方法实现
 tGraph GraphInit(void);
 void GraphDestory(tGraph G);
-void AddEdge_Single(tGraph G, Node U, Node V);
-void AddEdge_Double(tGraph G, Node U, Node V);
+void AddEdge_Single(tGraph G, Node U, Node V, WeightType weight = NODE_INIT_WEIGHT);
+void AddEdge_Double(tGraph G, Node U, Node V, WeightType weight = NODE_INIT_WEIGHT);
 void DeleteEdge_Single(tGraph G, Node U, Node V);
 void DeleteEdge_Double(tGraph G, Node U, Node V);
 void FreeList(tiGraphList list);
