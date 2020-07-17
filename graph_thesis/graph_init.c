@@ -17,6 +17,7 @@ tGraph GraphInit(void) {
     for(int iii = 0; iii < MAX_NODE_NUM; iii++) {
         G[iii].next = NULL;
         G[iii].name = NODE_INIT_VALUE;
+        G[iii].weight = NODE_INIT_WEIGHT;
     }
     return G;
 }
@@ -39,7 +40,7 @@ void GraphDestory(tGraph G) {
     }
 }
 
-void AddEdge_Single(tGraph G, Node U, Node V) {
+void AddEdge_Single(tGraph G, Node U, Node V, WeightType weight) {
     tiGraphList list = &(G[U]);
     while(list->next != NULL) {
         if(list->next->name == V) {
@@ -48,13 +49,15 @@ void AddEdge_Single(tGraph G, Node U, Node V) {
         list = list->next;
     }
     list->next = (pListNode)malloc(sizeof(tsListNode));
-    list->next->name = V;
-    list->next->next = NULL;
+    list = list->next;
+    list->name = V;
+    list->weight = weight;
+    list->next = NULL;
 }
 
-void AddEdge_Double(tGraph G, Node U, Node V) {
-    AddEdge_Single(G, U, V);
-    AddEdge_Single(G, V, U);
+void AddEdge_Double(tGraph G, Node U, Node V, WeightType weight) {
+    AddEdge_Single(G, U, V, weight);
+    AddEdge_Single(G, V, U, weight);
 }
 
 void DeleteEdge_Single(tGraph G, Node U, Node V) {

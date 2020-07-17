@@ -16,5 +16,6 @@ void topSort(tGraph G);
 void PrintTopSort(tGraph G);
 void ShortestPath_noWeight_simplify(tGraph G, int viPv[], Node startV = 3);
 void ShortestPath_noWeight(tGraph G, int viPv[], Node startV = 3);
+void ShortestPath_PassiveWeight(tGraph G, int viPv[], Node startV = 3);
 
 #endif /* GRAPH_H_C */
