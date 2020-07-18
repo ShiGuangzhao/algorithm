@@ -1,4 +1,4 @@
-SRC	=	main.c	../commom/common.c
+SRC	= $(wildcard *.c)
 TARGET = result
 OBJ = $(SRC:.c=.o)
 DEP = $(SRC:.c=.d)

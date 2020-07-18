@@ -20,6 +20,9 @@
 #define PRINT_WARRING(__str__) \
     printf("WARRING--FILE: %s, LINE: %d, %s\n", __FILE__, __LINE__, __str__);
 
-void PrintArray_int(int A[], int N, int line = 20);
+#define LOOP_ADD(__iii__, __begin__, __end__) \
+    for(int __iii__ = __begin__; __iii__ < __end__; __iii__++)
+
+void PrintArray_int(int A[], int N, int line);
 
 #endif /* COMMON_H_C */
