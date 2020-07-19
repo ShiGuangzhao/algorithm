@@ -5,8 +5,7 @@ DEP = $(SRC:.c=.d)
 
 CXX = g++
 #Option for compiler
-CXXFLAGS = -O2 -g
-# CXXFLAGS = 
+CXXFLAGS = -O2 -g -Wall
 
 $(TARGET): $(OBJ)
 	$(CXX) -o $@ $^ 

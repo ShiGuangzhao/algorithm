@@ -11,9 +11,9 @@
 #include "divide_conquer.h"
 
 void TestNearPonint(void) {
-    int NodeNum = 20;
-    int xRange = 50;
-    int yRange = 50;
+    int NodeNum = 3000;
+    int xRange = 1000;
+    int yRange = 1000;
     srand((unsigned)time(NULL)); 
     tsPoint P[NodeNum];
     tsPoint NearPoint[2];
@@ -25,16 +25,18 @@ void TestNearPonint(void) {
         P_temp->y = rand() % yRange;
         P_temp++;
     }
-    PrintPoints(P, NodeNum);
-    SortPoint_InsertionSort(P, NodeNum, GetPonit_x);
-    PrintPoints(P, NodeNum);
-
-
-
-    /* double d_min = GetNearPoints(P, NodeNum, NearPonit); */
-
-    /* printf("最近节点为(%d, %d)和(%d, %d)，距离为%f\n", NearPonit[0].x, NearPonit[0].y, NearPonit[1].x, NearPonit[1].y, d_min); */
-
+    /* PrintPoints(P, NodeNum); */
+    double beginclock = clock();
+    double d_min = GetNearPoints_saveNearPoints(P, NodeNum, NearPoint);
+    printf("1: 最近节点为(%d, %d)和(%d, %d)，距离为%f, clock = %f\n", \
+            NearPoint[0].x, NearPoint[0].y, \
+            NearPoint[1].x, NearPoint[1].y, d_min, clock() - beginclock);
+    beginclock = clock();
+    d_min = GetNearPoints_dq_saveNearPoints(P, NodeNum, NearPoint);
+    /* SortPoint_InsertionSort(P, NodeNum, GetPoint_x); */
+    printf("2: 最近节点为(%d, %d)和(%d, %d)，距离为%f, clock = %f\n", \
+            NearPoint[0].x, NearPoint[0].y, \
+            NearPoint[1].x, NearPoint[1].y, d_min, clock() - beginclock);
 }
 
 int main(void) {

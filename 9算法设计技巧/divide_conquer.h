@@ -23,15 +23,16 @@ typedef struct {
 typedef tsPoint* pPoint;
 
 // 直接计算最近点
-double GetNearPoints(tsPoint P[], int PonitsNum);
-double GetNearPoints_saveNearPoints(tsPoint P[], int PonitsNum, tsPoint NearPoint[]);
+double GetNearPoints(tsPoint P[], int PointsNum);
+double GetNearPoints_saveNearPoints(tsPoint P[], int PointsNum, tsPoint NearPoint[]);
 // 使用分治算法计算最近点
-double GetNearPoints_dq(tsPoint P[], int PonitsNum);
-// double GetNearPoints_dq(tsPoint P[], int PonitsNum, tsPoint NearPoint[]);
-extern void SortPoint_InsertionSort(tsPoint A[], int PonitsNum, int (*key)(tsPoint p));
-// extern void SortPoint_InsertionSort(tsPoint A[], int PonitsNum, int (*key)(tsPoint p), int sort_result);
+double GetNearPoints_dq_saveNearPoints(tsPoint P[], int PointsNum, tsPoint NearPoint[]);
+// double GetNearPoints_dq(tsPoint P[], int PointsNum, tsPoint NearPoint[]);
+extern void SortPoint_InsertionSort(tsPoint A[], int PointsNum, int (*key)(tsPoint p));
+extern void SortPointIndex_InsertionSort(tsPoint A[], int PointsNum, int (*key)(tsPoint p), int SortIndex[]);
 extern void PrintPoints(tsPoint P[], int NodeNum);
-extern int GetPonit_x(tsPoint p);
-extern int GetPonit_y(tsPoint p);
+extern void PrintArray_int(int A[], int NodeNum);
+extern int GetPoint_x(tsPoint p);
+extern int GetPoint_y(tsPoint p);
 
 #endif /* DIVIDE_CONQUER_H_C */
