@@ -14,7 +14,6 @@ void TestNearPonint(void) {
     int NodeNum = 3000;
     int xRange = 1000;
     int yRange = 1000;
-    srand((unsigned)time(NULL)); 
     tsPoint P[NodeNum];
     tsPoint NearPoint[2];
     pPoint P_temp = P;
@@ -39,7 +38,25 @@ void TestNearPonint(void) {
             NearPoint[1].x, NearPoint[1].y, d_min, clock() - beginclock);
 }
 
+void TestMatrix(void) {
+    pMatrix A = MatrixInit_Rand(5, 5, 3);
+    pMatrix B = MatrixInit_Rand(5, 5, 3);
+    pMatrix C = MatrixInit_Zero(5, 5);
+
+    PrintMatrix(A);
+    PrintMatrix(B);
+    PrintMatrix(C);
+
+    MatrixMultiply(A, B, C);
+    PrintMatrix(C);
+
+    MatrixDestory(A);
+    MatrixDestory(B);
+    MatrixDestory(C);
+}
+
 int main(void) {
-    TestNearPonint();
+    srand((unsigned)time(NULL)); 
+    TestMatrix();
     return 0;
 }

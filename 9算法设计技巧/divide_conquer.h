@@ -35,4 +35,9 @@ extern void PrintArray_int(int A[], int NodeNum);
 extern int GetPoint_x(tsPoint p);
 extern int GetPoint_y(tsPoint p);
 
+/* **********
+ * 矩阵乘法
+ * *****/
+#include "matrix.h"
+
 #endif /* DIVIDE_CONQUER_H_C */

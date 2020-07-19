@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <math.h>
+#include <stdlib.h>
 #include <string.h>
 #include "divide_conquer.h"
 #include "../commom/common.h"
@@ -144,3 +145,4 @@ double GetNearPoints_dq_saveNearPoints(tsPoint P[], int PointsNum, tsPoint NearP
     // 分治
     return NearPoints_subDQ(Psortx, QyIndex, PointsNum, NearPoint);
 }
+
