@@ -8,7 +8,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h> 
+#include "../commom/common.h"
 #include "divide_conquer.h"
+#include "randomized.h"
 
 void TestNearPonint(void) {
     int NodeNum = 3000;
@@ -55,8 +57,22 @@ void TestMatrix(void) {
     MatrixDestory(C);
 }
 
-int main(void) {
+void TestRandom(void) {
+    RandInit(time(NULL));
+    LOOP_ADD(iii, 0,  20) {
+        printf("%d\t", Random() % 20);
+    }
+    printf("\n");
     srand((unsigned)time(NULL)); 
-    TestMatrix();
+    LOOP_ADD(iii, 0,  20) {
+        printf("%d\t", rand() % 20);
+    }
+    printf("\n");
+}
+
+int main(void) {
+    /* srand((unsigned)time(NULL));  */
+    /* TestMatrix(); */
+    TestRandom();
     return 0;
 }
